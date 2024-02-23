@@ -1,0 +1,58 @@
+<%- include('../partials/header.ejs')%>
+    <title>Profile</title>
+    <link type="text/css" rel="stylesheet" href="/css/login.css">
+    <%- include('../partials/header-end.ejs')%>
+        <div id="preloader"></div>
+        <div class="content">
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="https://via.placeholder.com/150" class="img-thumbnail">
+                    </div>
+                    <div class="col-md-8">
+                        <h1><%=user.firstName%> <%=user.lastName%></h1>
+                            <h3>Here are the events you've bookmarked: </h3>
+                            <ul id="bookmarks">
+                                <% if(user.bookmarks.length) {%>
+                                    <%user.bookmarks.forEach(item => {%>
+                                        <a href="<%= item["link"]%>"><li><%=item["title"]%></li></a>
+
+                                        <form>
+                                            <a href="/bookmarks-del?title=<%= item['title'] + '&link=' + item['link'] %>"><input type="button" id="deleteBtn" value="Delete"></a>
+                                        </form>
+                                    <%})%>
+                                <%} else {%>
+                                    <p>You have no bookmarks to display.</p>
+                                <%}%>
+                            </ul>
+
+                        <h3>Here are your interests: </h3>
+                            <% if(user.interests.length) {%>
+                                <%user.interests.forEach(item => {%>
+                                    <li><%=item%></li>
+
+                                    <form>
+                                        <a href="/remove-interest?interests=<%=item%>"><input type="button" id="deleteBtn" value="Delete"></a>
+                                    </form>
+                                <%})%>
+                            <%} else {%>
+                                <p>You have no interests to display.</p>
+                            <%}%>
+
+                            <h3>Here are your dislikes: </h3>
+                            <% if(user.dislikes.length) {%>
+                                <%user.dislikes.forEach(item => {%>
+                                    <li><%=item%></li>
+
+                                    <form>
+                                        <a href="/remove-dislike?dislikes=<%=item%>"><input type="button" id="deleteBtn" value="Delete"></a>
+                                    </form>
+                                <%})%>
+                            <%} else {%>
+                                <p>You have no dislikes to display.</p>
+                            <%}%>
+                        </ul>
+                </div>
+            </div>
+        </div>
+        <%- include('../partials/footer.ejs')%>
